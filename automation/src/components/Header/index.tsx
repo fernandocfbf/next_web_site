@@ -1,13 +1,18 @@
 import Image from 'next/image'
-import { useRouter } from 'next/router'
+import { Router, useRouter } from 'next/router'
 import styles from './styles.module.scss'
+
+
 
 
 export function Header(){
 
   const router = useRouter()
   const currentUrl = router.pathname 
-  console.log(currentUrl)
+
+  function logOut(){
+    router.push('/')
+  }
 
   return (
     <div className={styles.headerContainer}>
@@ -23,6 +28,7 @@ export function Header(){
         <a>Artificial Intelligence</a>
         <a>Web Scraping</a>
         <a>Get Start</a>
+        <button onClick={() => logOut()}>Log Out</button>
       </div>
     </div>
   )

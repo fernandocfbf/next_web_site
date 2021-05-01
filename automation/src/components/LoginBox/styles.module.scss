@@ -1,0 +1,54 @@
+.box {
+	display: flex;
+	justify-content: end;
+	background-color: var(--background);
+	width: 50rem;
+	height: 35rem;
+	border-radius: 10px;
+	background-image: url('/login-background_test.png');
+	background-repeat: no-repeat;
+	
+}
+
+.textBox{
+	display: flex;
+	flex-wrap: wrap;
+	width: 50%;
+	justify-content: center;
+
+	h2{
+		color: var(--purple);
+		padding-top: 4rem;
+
+	}
+
+	button{
+		background: var(--purple);
+		color: var(--white);
+		border: none;
+		width: 70%;
+		height: 2rem;
+		border-radius: 20px;
+	}
+}
+
+.textInput{
+	width: 80%;
+
+	p{
+		color: var(--gray-500);
+	
+	}
+
+	input{
+		width: 100%;
+		background: none;
+		border: none;
+		border-bottom: 2px solid var(--gray-500);
+
+		&:focus{
+			outline: none;
+			border-bottom: 4px solid var(--purple);
+		}
+	}
+}

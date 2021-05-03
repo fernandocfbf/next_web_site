@@ -9,37 +9,41 @@
 .textHeader {
   width: 100%;
   display: flex;
-  align-items: center; 
+  align-items: center;
   justify-content: flex-end;
+}
 
+.logOut {
+  background-color: var(--red);
+  color: var(--white);
+  height: 2.5rem;
+  width: 7.5rem;
+  border: none;
+  border-radius: 1.5rem;
 
-  a {
-    color: var(--white);
-    text-decoration: none;
-    font-family: Lexend, sans-serif;
-    cursor: pointer;
-    padding: 0.675rem 2rem;
-  }
+  transition: filter 0.2s;
 
-  button{
-    background-color: var(--red);
-    color: var(--white);
-    height: 2.5rem;
-    width: 7.5rem;
-    border: none;
-    border-radius: 1.5rem;
-
-    transition: filter 0.2s;
-
-    &:hover {
-      filter: brightness(0.9);
-    }
+  &:hover {
+    filter: brightness(0.9);
   }
 }
 
-.filledHeader{
+.filledHeader {
+  background: none;
+  height: 3rem;
+  border-spacing:10px;
+  padding: 0rem 2rem;
   border-style: solid;
   border-radius: 1.25rem;
   border-color: var(--purple);
+  color: var(--white)
+}
 
+.headerButton {
+  color: var(--white);
+  background: none;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0.675rem 2rem;
 }

@@ -1,0 +1,48 @@
+.artificalPage{
+  width: 100%;
+  height: 100vh;
+  background: var(--background);
+}
+
+.contain{
+  display: flex;
+  width: 100%;
+}
+
+.title{
+  display: flex;
+  padding: 5rem 0rem 1rem 0rem;
+  justify-content: center;
+  color: var(--white);
+}
+
+.line{
+  margin: auto;
+  width: 7rem;
+  height: 0.1rem;
+  background: var(--green);
+}
+
+.boxes{
+  display: flex;
+  width: 40%;
+  flex-wrap: wrap;
+  padding: 3rem 2rem;
+  gap: 2rem;
+}
+
+.upload{
+
+  padding: 3rem 2rem;
+  width: 60%;
+  justify-content: center;
+  
+  button{
+    width: 100%;
+    background: none;
+    height: 10rem;
+    border-style: dashed;
+    border-color: var(--gray);
+    color: --var(gray-500);
+  }
+}

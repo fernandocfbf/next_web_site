@@ -8,6 +8,19 @@
   border-style: solid;
   border-width: 0.1rem;
   border-radius: 15px;
+  transform: translate(-50% -50%);
+
+  p{
+    color: var(--white);
+    margin-left: 1rem;
+    margin-right: 1rem;
+
+  }
+
+  h1{
+    color: var(--green) !important;;
+    font-size: 4rem !important;
+  }
 }
 
 .iconBack{
@@ -21,8 +34,8 @@
   border-width: 0.15rem;
   margin-left: 1rem;
 
-  width: 100px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
 
 }
 
@@ -31,28 +44,8 @@
   align-items: center;
   justify-content: center;
   background: var(--white);
-  width: 70px;
-  height: 70px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   border: none;
- 
-}
-
-.text{
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-
-  p{
-    color: var(--white);
-    margin-right: 1rem;
-  }
-
-  h1{
-    color: var(--green);
-    font-size: 4rem;
-  }
-
 }

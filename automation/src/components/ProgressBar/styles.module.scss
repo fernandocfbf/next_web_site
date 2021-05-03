@@ -1,0 +1,21 @@
+.containerStyles {
+  height: 20;
+  width: 100%;
+  margin-bottom: 2rem;
+  background: var(--selection);
+  border-radius: 2rem;
+}
+
+.fillerStyles {
+  height: 100%;
+  border-radius: inherit;
+  text-align: right;
+  background-color: var(--green);
+  transition: width 1s ease-in-out;
+}
+
+.labelStyles {
+  padding: 5;
+  color: var(--white);
+  font-weight: bold;
+}

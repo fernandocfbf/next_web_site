@@ -29,7 +29,7 @@ export default function Home() {
 
 				<button>
 					Get Start
-      			</button>
+      	</button>
 
 				<div className={styles.icons}>
 

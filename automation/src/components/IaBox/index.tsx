@@ -29,13 +29,9 @@ export function AiBox({ box }: BoxProps) {
         </span>
       </span>
 
+      <p>{box.title}</p>
+      <h1>{box.value}</h1>
 
-      <div className={styles.text}>
-
-        <p>{box.title}</p>
-        <br></br>
-        <h1>{box.value}</h1>
-      </div>
 
     </div>
   )

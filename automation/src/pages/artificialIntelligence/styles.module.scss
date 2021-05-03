@@ -1,48 +1,104 @@
-.artificalPage{
+.artificalPage {
   width: 100%;
   height: 100vh;
   background: var(--background);
+
+  h1 {
+    color: var(--white);
+  }
 }
 
-.contain{
+.contain {
   display: flex;
   width: 100%;
 }
 
-.title{
+.title {
   display: flex;
-  padding: 5rem 0rem 1rem 0rem;
+  padding: 2rem 0rem 0.5rem 0rem;
   justify-content: center;
-  color: var(--white);
 }
 
-.line{
+.line {
   margin: auto;
   width: 7rem;
   height: 0.1rem;
   background: var(--green);
 }
 
-.boxes{
+.boxes {
   display: flex;
   width: 40%;
+  height: 100%;
   flex-wrap: wrap;
-  padding: 3rem 2rem;
+  padding: 3rem 2rem 0rem 2rem;
   gap: 2rem;
 }
 
-.upload{
-
-  padding: 3rem 2rem;
+.upload {
+  padding: 3rem 2rem 0rem 0rem;
   width: 60%;
   justify-content: center;
-  
-  button{
-    width: 100%;
-    background: none;
-    height: 10rem;
-    border-style: dashed;
-    border-color: var(--gray);
-    color: --var(gray-500);
+}
+
+.buttonBrowse {
+  width: 100%;
+  background: none;
+  height: 100%;
+  border-style: dashed;
+  border-color: var(--gray-500);
+  color: var(--gray-500);
+}
+
+.table {
+  width: 100%;
+  height: 100%;
+}
+
+.processButtonColor {
+  width: 8rem;
+  height: 2rem;
+  color: var(--green);
+  background: var(--selection);
+  border: none;
+  margin-bottom: 1rem;
+  border-radius: 1rem;
+  border-style: solid;
+  border-color: var(--green);
+  border-width: 0.1rem;
+  font-weight: bold;
+
+  transition: filter 0.2s;
+
+  &:hover {
+    filter: brightness(0.9);
   }
+}
+
+.processButtonGray {
+  width: 8rem;
+  height: 2rem;
+  color: var(--gray-500);
+  background: var(--green);
+  border: none;
+  margin: 2rem 0rem 1rem 0rem;
+  border-radius: 1rem;
+  font-weight: bold;
+
+  transition: filter 0.2s;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+.progressContainer{
+  padding: 1rem 2rem 0rem 2rem;
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.progress{
+  width: 60%;
 }

@@ -1,16 +1,20 @@
 import styles from './styles.module.scss'
 import { Header } from '../../components/Header'
 
+import { makeStyles } from '@material-ui/core/styles';
+
 import { AiOutlineDownload, AiOutlineRocket } from 'react-icons/ai'
 import { AiBox } from '../../components/IaBox'
 import { ProgressBar } from '../../components/ProgressBar'
 
-import { useState } from 'react';
-import { Table, DatePicker } from 'antd';
-import 'antd/dist/antd.css';
+import { useEffect, useState } from 'react';
+import { DataGrid, ColDef } from '@material-ui/data-grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Backdrop from '@material-ui/core/Backdrop';
 
 import * as XLSX from 'xlsx';
 import { CSVLink } from "react-csv";
+import api from '../../services/api'
 
 import functionresumeImport from "../../functions/resumeImport"
 import functionprocessDate from "../../functions/processDate"
@@ -25,18 +29,23 @@ export default function ArtificialIntelligence() {
 	const [fileName, setFileName] = useState('')
 	const [data, setData] = useState([])
 	const [dataFiltered, setDataFiltered] = useState([])
-	const [loading, setLoading] = useState(true)
-	const { RangePicker } = DatePicker;
+	const [dataClassified, setDataClassified] = useState([])
+	const [open, setOpen] = useState(false)
+	const [processDisable, setProcessDisable] = useState(true)
+	const [downloadDisable, setDownloadDisable] = useState(true)
+	const [progress, setProgress] = useState(0)
+
+
 	const inputFile = useRef(null) //executa quando clica no input
+
 	const onButtonClick = () => {
 		inputFile.current.click(); // `current` points to the mounted file input element
 	}
 
-	function readExcel(file) {
+	async function readExcel(file) {
 		try {
 
 			setFileName(file['name']) //atualiza o nome do arquivo
-
 			const promise = new Promise((resolve, reject) => {
 
 				const fileReader = new FileReader() //o arquvio é lido pelo fileReader
@@ -71,8 +80,8 @@ export default function ArtificialIntelligence() {
 				else {
 					var d_filtered = functionresumeImport(d)
 					setData(d_filtered)
+					setProcessDisable(false)
 					setDataFiltered(d_filtered)
-					setLoading(false)
 				}
 			})
 		} catch (err) {
@@ -108,44 +117,79 @@ export default function ArtificialIntelligence() {
 		setDataFiltered(final_data)
 	}
 
-	const col = [
+	async function process() {
+
+		const data_to_send = []
+
+		for (var i = 0; i < dataFiltered.length; i++) {
+			data_to_send.push({ "HTML": dataFiltered[i]["HTML"] })
+		}
+
+		var inicio = 0
+		var fim = 40
+
+		var new_data = []
+
+		for (var i = 0; i < data_to_send.length / 40; i++) {
+			await api.post('machineLearning', { manchetes: data_to_send.slice(inicio, fim) })
+				.then(resp => {
+					if (Math.floor(resp.status / 100) === 2) {
+						if (resp.data != false) {
+							new_data = new_data.concat(eval('(' + resp.data + ')'))
+
+							const formated_progress = parseFloat(((i) / (data_to_send.length / 40) * 100).toFixed(2))
+							setProgress(formated_progress)
+							setDataClassified(new_data)
+						}
+					}
+				}).catch((err) => {
+					console.log(err)
+				})
+
+			inicio += 40
+			fim += 40
+		}
+		setDataClassified(new_data)
+		setDownloadDisable(false)
+		setProgress(100)
+	}
+
+	const columns: ColDef[] = [
 		{
-			title: "Date",
-			dataIndex: "Data"
+			headerName: "Date",
+			field: "Data",
+			width: "33%"
 		},
 		{
-			title: "Sender",
-			dataIndex: "De"
+			headerName: "Sender",
+			field: "De",
+			width: "33%"
 		},
 		{
-			title: "HTML",
-			dataIndex: "HTML_"
-		},
-		{
-			title: "Resume",
-			dataIndex: "Resumo_"
-		},
+			headerName: "Resume",
+			field: "Resumo_",
+			width: "33%"
+		}
 	]
 
-	const table = (
-		<Table
-			className={styles.table}
-			columns={col}
-			dataSource={dataFiltered}
-			pagination={false}
-			loading={loading}
-			scroll={{
-				y: 150,
-				x: 300
-			}}
+	const useStyles = makeStyles((theme) => ({
+		root: {
+			width: "100%",
+			background: 'white',
+			borderRadius: 3,
+			color: 'black',
+		},
+		backdrop: {
+			zIndex: theme.zIndex.drawer + 1,
+			color: '#fff',
+		},
+	}))
 
-			title={() =>
-				<RangePicker
-					format={"DD/MM/YYYY"}
-					onChange={(e) => filtroData(e)}
-				/>
-			}>
-		</Table >
+
+	const classes = useStyles();
+
+	const table = (
+		<DataGrid className={classes.root} rows={dataFiltered} columns={columns} pageSize={5} />
 	)
 
 	const browseFile = (
@@ -158,6 +202,9 @@ export default function ArtificialIntelligence() {
 	return (
 		<div className={styles.artificalPage}>
 			<Header></Header>
+			<Backdrop open={open} className={classes.backdrop}>
+				<CircularProgress />
+			</Backdrop>
 			<div className={styles.title}>
 				<h1>Machine Learning through SVM</h1>
 			</div>
@@ -191,14 +238,33 @@ export default function ArtificialIntelligence() {
 						style={{ display: 'none' }}
 						onChange={(e) => readExcel(e.target.files[0])} />
 
-					{loading ? (browseFile) : (table)}
+					{data.length == 0 ? (browseFile) : (table)}
 				</div>
 
 			</div>
 			<div className={styles.progressContainer}>
 				<div className={styles.progress}>
-					<button className={styles.processButtonColor}>Process</button>
-					<ProgressBar bar={{ progress: 43 }}></ProgressBar>
+					<button
+						onClick={() => process()}
+						disabled={processDisable}
+						className={processDisable == true ? styles.disableButton : styles.processButtonColor}
+					>Process
+					</button>
+
+					{downloadDisable == true ? (null) : (
+						<button
+							disabled={downloadDisable}
+							className={styles.downloadButton}>
+							<CSVLink
+								className={styles.csvLink}
+								filename={"manchetes_classificadas.csv"}
+								data={dataClassified}>
+								Download
+          </CSVLink>
+						</button>
+					)}
+
+					<ProgressBar bar={{ progress: progress }}></ProgressBar>
 				</div>
 			</div>
 

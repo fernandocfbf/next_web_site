@@ -2,9 +2,6 @@ import Image from 'next/image'
 import { Router, useRouter } from 'next/router'
 import styles from './styles.module.scss'
 
-
-
-
 export function Header() {
 
   const router = useRouter()
@@ -21,8 +18,8 @@ export function Header() {
   return (
     <div className={styles.headerContainer}>
       <Image
-        width={327}
-        height={55}
+        width={300}
+        height={200}
         src={'/logo.png'}
         objectFit='contain'
       ></Image>

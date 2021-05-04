@@ -75,13 +75,17 @@
   }
 }
 
+.progress{
+  position: relative;
+  width: 60%;
+}
+
 .processButtonGray {
   width: 8rem;
   height: 2rem;
   color: var(--gray-500);
   background: var(--green);
   border: none;
-  margin: 2rem 0rem 1rem 0rem;
   border-radius: 1rem;
   font-weight: bold;
 
@@ -92,6 +96,29 @@
   }
 }
 
+.downloadButton{
+  position: absolute;
+  right: 0rem;
+  color: white;
+  text-decoration: none;
+  background: var(--green);
+  width: 8rem;
+  height: 2rem;
+  border-radius: 1rem;
+  border:none;
+  font-weight: bold;
+  transition: filter 0.2s;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+.csvLink{
+  text-decoration: none;
+  color: var(--white);
+}
+
 .progressContainer{
   padding: 1rem 2rem 0rem 2rem;
   display: flex;
@@ -99,6 +126,15 @@
   justify-content: flex-end;
 }
 
-.progress{
-  width: 60%;
+.disableButton{
+  background-color: var(--selection);
+  color: var(--gray-500);
+  text-decoration: none;
+  width: 8rem;
+  height: 2rem;
+  font-weight: bold;
+  border-radius: 1rem;
+  border:none;
 }
+
+

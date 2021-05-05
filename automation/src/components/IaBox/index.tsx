@@ -1,10 +1,12 @@
 import styles from './styles.module.scss'
 import Image from 'next/image'
+import {AiFillRocket, AiOutlineDotChart} from 'react-icons/ai'
 
 type Box = {
   icon: string,
   title: string,
-  value: string
+  value: string,
+  type: number
 }
 
 type BoxProps = {
@@ -18,14 +20,8 @@ export function AiBox({ box }: BoxProps) {
 
       <span className={styles.iconBack}>
         <span className={styles.icon}>
-
-          <Image
-            width={70}
-            height={70}
-            objectFit="contain"
-            src={box.icon}>
-
-          </Image>
+          {box.type ? (<AiFillRocket size="100%" color="#6710a2"></AiFillRocket>) :
+           (<AiOutlineDotChart size="90%" color="#6710a2"></AiOutlineDotChart>)}
         </span>
       </span>
 

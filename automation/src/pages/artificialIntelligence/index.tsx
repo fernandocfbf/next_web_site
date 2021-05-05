@@ -260,14 +260,16 @@ export default function ArtificialIntelligence() {
 						{
 							icon: "/precision.png",
 							title: "Algorithm precision",
-							value: "97,2%"
+							value: "97,2%",
+							type: 0
 						}
 					}></AiBox>
 
 					<AiBox box={{
 						icon: "/vel.png",
 						title: "Readlines per second",
-						value: "8,00"
+						value: "8,00",
+						type: 1
 					}}></AiBox>
 				</div>
 
@@ -293,7 +295,7 @@ export default function ArtificialIntelligence() {
 					>Process
 					</button>
 
-					{loading ? (<CircularProgress size="1.5rem" />) : (null)}
+					{loading ? (<CircularProgress size="1.5rem"/>) : (null)}
 
 					{downloadDisable == true ? (null) : (
 						<button

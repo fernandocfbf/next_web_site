@@ -31,10 +31,9 @@
 .filledHeader {
   background: none;
   height: 3rem;
-  border-spacing:10px;
-  padding: 0rem 2rem;
   border-style: solid;
-  border-radius: 1.25rem;
+  padding: 0.675rem 2rem;
+  border-radius: 1rem;
   border-color: var(--purple);
   color: var(--white)
 }

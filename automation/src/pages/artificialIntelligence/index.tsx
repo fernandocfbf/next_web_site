@@ -8,13 +8,16 @@ import { AiBox } from '../../components/IaBox'
 import { ProgressBar } from '../../components/ProgressBar'
 
 import { useEffect, useState } from 'react';
-import { DataGrid, ColDef } from '@material-ui/data-grid';
+import { DataGrid, GridColDef } from '@material-ui/data-grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Backdrop from '@material-ui/core/Backdrop';
 
 import * as XLSX from 'xlsx';
 import { CSVLink } from "react-csv";
 import api from '../../services/api'
+
+import Snackbar from '@material-ui/core/Snackbar';
+import { Message } from '../../components/Message'
 
 import functionresumeImport from "../../functions/resumeImport"
 import functionprocessDate from "../../functions/processDate"
@@ -34,7 +37,18 @@ export default function ArtificialIntelligence() {
 	const [processDisable, setProcessDisable] = useState(true)
 	const [downloadDisable, setDownloadDisable] = useState(true)
 	const [progress, setProgress] = useState(0)
+	const [openError, setOpenError] = useState(false)
+	const [openSuccess, setOpenSuccess] = useState(false)
 
+
+	const handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+
+		setOpenError(false);
+		setOpenSuccess(false)
+	};
 
 	const inputFile = useRef(null) //executa quando clica no input
 
@@ -62,29 +76,33 @@ export default function ArtificialIntelligence() {
 						const data = XLSX.utils.sheet_to_json(ws) //converte os dados para json
 						resolve(data)
 					} catch {
-						//se crahcou
+						setOpenError(true)
 					}
 
 					//caso tenha algum erro no arquivo...
 					fileReader.onerror = ((error) => {
 						reject(error)
+						setOpenError(true)
 					})
 				}
 			})
 
 			promise.then((d) => {
 				if (d[0]['Data'] == undefined && d[0]["HTML"] == undefined) {
-					//conteúdo inválido
+					setOpenError(true)
 				}
 
 				else {
 					var d_filtered = functionresumeImport(d)
+
+					setOpenSuccess(true)
 					setData(d_filtered)
 					setProcessDisable(false)
 					setDataFiltered(d_filtered)
 				}
 			})
 		} catch (err) {
+			setOpenError(true)
 			console.log(err)
 		}
 	}
@@ -118,9 +136,6 @@ export default function ArtificialIntelligence() {
 	}
 
 	async function process() {
-
-		setProgress(0) //reseta o progresso
-		setDataFiltered([]) //reseta as manchetes classificadas
 
 		const data_to_send = []
 
@@ -159,21 +174,21 @@ export default function ArtificialIntelligence() {
 		setProgress(100)
 	}
 
-	const columns: ColDef[] = [
+	const columns: GridColDef[] = [
 		{
 			headerName: "Date",
 			field: "Data",
-			width: "33%"
+			width: 200
 		},
 		{
 			headerName: "Sender",
 			field: "De",
-			width: "33%"
+			width: 200
 		},
 		{
 			headerName: "Resume",
 			field: "Resumo_",
-			width: "33%"
+			width: 400
 		}
 	]
 
@@ -213,9 +228,25 @@ export default function ArtificialIntelligence() {
 		</button>
 	)
 
+	const error = (
+		<Snackbar style={{ width: "20rem", height: "2.5rem" }} open={openError} autoHideDuration={2000} onClose={handleClose}>
+			<Message message={{ type: "error", message: "Something wrong happened" }}></Message>
+		</Snackbar>
+	)
+
+	const success = (
+		<Snackbar style={{ width: "20rem", height: "2.5rem" }} open={openSuccess} autoHideDuration={2000} onClose={handleClose}>
+			<Message message={{ type: "success", message: "File loaded" }}></Message>
+		</Snackbar>
+	)
+
 	return (
 		<div className={styles.artificalPage}>
 			<Header></Header>
+
+			{openError ? (error) : (null)}
+			{openSuccess ? (success) : (null)}
+
 			<div className={styles.title}>
 				<h1>Machine Learning through SVM</h1>
 			</div>

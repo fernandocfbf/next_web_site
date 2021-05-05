@@ -19,7 +19,7 @@
 	justify-content: center;
 
 	h2 {
-		color: var(--purple);
+		color: var(--white);
 		padding-top: 4rem;
 	}
 
@@ -27,9 +27,15 @@
 		background: var(--purple);
 		color: var(--white);
 		border: none;
-		width: 70%;
+		width: 80%;
 		height: 2rem;
 		border-radius: 20px;
+
+		transition: filter 0.2s;
+
+		&:hover {
+			filter: brightness(0.9);
+		}
 	}
 }
 

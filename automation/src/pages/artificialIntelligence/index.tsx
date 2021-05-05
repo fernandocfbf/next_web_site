@@ -30,7 +30,7 @@ export default function ArtificialIntelligence() {
 	const [data, setData] = useState([])
 	const [dataFiltered, setDataFiltered] = useState([])
 	const [dataClassified, setDataClassified] = useState([])
-	const [open, setOpen] = useState(false)
+	const [loading, setLoading] = useState(false)
 	const [processDisable, setProcessDisable] = useState(true)
 	const [downloadDisable, setDownloadDisable] = useState(true)
 	const [progress, setProgress] = useState(0)
@@ -119,6 +119,9 @@ export default function ArtificialIntelligence() {
 
 	async function process() {
 
+		setProgress(0) //reseta o progresso
+		setDataFiltered([]) //reseta as manchetes classificadas
+
 		const data_to_send = []
 
 		for (var i = 0; i < dataFiltered.length; i++) {
@@ -149,6 +152,8 @@ export default function ArtificialIntelligence() {
 			inicio += 40
 			fim += 40
 		}
+		setLoading(false)
+		setProcessDisable(false)
 		setDataClassified(new_data)
 		setDownloadDisable(false)
 		setProgress(100)
@@ -185,6 +190,15 @@ export default function ArtificialIntelligence() {
 		},
 	}))
 
+	useEffect(() => {
+
+		if (loading) {
+			setProcessDisable(true)
+			setProcessDisable(true)
+			process()
+		}
+
+	}, [loading]);
 
 	const classes = useStyles();
 
@@ -202,9 +216,6 @@ export default function ArtificialIntelligence() {
 	return (
 		<div className={styles.artificalPage}>
 			<Header></Header>
-			<Backdrop open={open} className={classes.backdrop}>
-				<CircularProgress />
-			</Backdrop>
 			<div className={styles.title}>
 				<h1>Machine Learning through SVM</h1>
 			</div>
@@ -245,11 +256,13 @@ export default function ArtificialIntelligence() {
 			<div className={styles.progressContainer}>
 				<div className={styles.progress}>
 					<button
-						onClick={() => process()}
+						onClick={() => setLoading(true)}
 						disabled={processDisable}
 						className={processDisable == true ? styles.disableButton : styles.processButtonColor}
 					>Process
 					</button>
+
+					{loading ? (<CircularProgress size="1.5rem" />) : (null)}
 
 					{downloadDisable == true ? (null) : (
 						<button

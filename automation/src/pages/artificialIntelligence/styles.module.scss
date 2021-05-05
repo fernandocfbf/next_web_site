@@ -61,7 +61,7 @@
   color: var(--green);
   background: var(--selection);
   border: none;
-  margin-bottom: 1rem;
+  margin: 0rem 0.8rem 1rem 0rem;
   border-radius: 1rem;
   border-style: solid;
   border-color: var(--green);
@@ -77,23 +77,9 @@
 
 .progress{
   position: relative;
+  display: flex;
+  flex-wrap: wrap;
   width: 60%;
-}
-
-.processButtonGray {
-  width: 8rem;
-  height: 2rem;
-  color: var(--gray-500);
-  background: var(--green);
-  border: none;
-  border-radius: 1rem;
-  font-weight: bold;
-
-  transition: filter 0.2s;
-
-  &:hover {
-    filter: brightness(0.9);
-  }
 }
 
 .downloadButton{
@@ -128,6 +114,7 @@
 
 .disableButton{
   background-color: var(--selection);
+  margin: 0rem 0.8rem 1rem 0rem;
   color: var(--gray-500);
   text-decoration: none;
   width: 8rem;

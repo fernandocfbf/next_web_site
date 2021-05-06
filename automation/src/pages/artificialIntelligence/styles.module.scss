@@ -15,15 +15,22 @@
 
 .title {
   display: flex;
-  padding: 2rem 0rem 0.5rem 0rem;
   justify-content: center;
-}
+  flex-direction: column;
+  padding: 2rem 0rem 0.5rem 0rem;
 
-.line {
-  margin: auto;
-  width: 7rem;
-  height: 0.1rem;
-  background: var(--green);
+  h1 {
+    margin: auto;
+    color: var(--white);
+  }
+
+  span {
+    margin: auto;
+    width: 7rem;
+    height: 0.1rem;
+    margin-top: 0.5rem;
+    background: var(--green);
+  }
 }
 
 .boxes {

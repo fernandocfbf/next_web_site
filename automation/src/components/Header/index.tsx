@@ -36,7 +36,8 @@ export function Header() {
           Artificial Intelligence
         </button>
         <button
-          className={currentUrl == '/webScraping' ? styles.filledHeader : styles.headerButton}>
+          className={currentUrl == '/webScraping' ? styles.filledHeader : styles.headerButton}
+          onClick={() => redirect('/webScraping')}>
           Web Scraping
           </button>
         <button

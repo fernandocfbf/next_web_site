@@ -248,10 +248,11 @@ export default function ArtificialIntelligence() {
 			{openSuccess ? (success) : (null)}
 
 			<div className={styles.title}>
-				<h1>Machine Learning through SVM</h1>
+				<h1>Machine Learning Through SVM</h1>
+				<span></span>
 			</div>
 
-			<div className={styles.line}></div>
+			
 
 			<div className={styles.contain}>
 

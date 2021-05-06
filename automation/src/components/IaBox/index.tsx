@@ -20,8 +20,8 @@ export function AiBox({ box }: BoxProps) {
 
       <span className={styles.iconBack}>
         <span className={styles.icon}>
-          {box.type ? (<AiFillRocket size="100%" color="#6710a2"></AiFillRocket>) :
-           (<AiOutlineDotChart size="90%" color="#6710a2"></AiOutlineDotChart>)}
+          {box.type ? (<AiFillRocket size="100%" color="#ffff"></AiFillRocket>) :
+           (<AiOutlineDotChart size="90%" color="#ffff"></AiOutlineDotChart>)}
         </span>
       </span>
 

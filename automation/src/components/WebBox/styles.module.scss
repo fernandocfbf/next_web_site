@@ -1,0 +1,89 @@
+.unselectedBox {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 25rem;
+  width: 23%;
+  padding: 1rem;
+  background: var(--selection);
+  border-radius: 0.5rem;
+  filter: brightness(0.5);
+  transition: filter 0.2s;
+
+  &:hover {
+    transform: translateY(0) scale(1.05);
+    filter: brightness(1);
+  }
+}
+
+.selectedBox{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 25rem;
+  width: 23%;
+  padding: 1rem;
+  background: var(--selection);
+  border-radius: 0.5rem;
+  transform: translateY(0) scale(1.05);
+}
+
+.title {
+  margin: auto;
+  color: var(--green);
+}
+
+.text {
+  margin: auto;
+  margin-top: 1rem;
+  color: var(--white);
+  text-align: justify;
+}
+
+.circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  background: none;
+  border-style: solid;
+  border-color: var(--green);
+  border-radius: 50%;
+  margin-bottom: 1rem;
+
+  width: 8rem;
+  height: 8rem;
+}
+
+.imageBackground {
+  width: 95%;
+  height: 95%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--white);
+}
+
+.selected {
+  margin: auto;
+  background-color: var(--green);
+  margin-top: 1rem;
+  border-radius: 2rem;
+  color: var(--white);
+  border: none;
+  width: 60%;
+  height: 2.5rem;
+  font-weight: bold;
+}
+
+.unselected {
+  margin: auto;
+  background-color: var(--gray-500);
+  margin-top: 1rem;
+  border-radius: 2rem;
+  color: var(--white);
+  border: none;
+  width: 60%;
+  height: 2.5rem;
+}

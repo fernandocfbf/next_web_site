@@ -252,8 +252,6 @@ export default function ArtificialIntelligence() {
 				<span></span>
 			</div>
 
-			
-
 			<div className={styles.contain}>
 
 				<div className={styles.boxes}>

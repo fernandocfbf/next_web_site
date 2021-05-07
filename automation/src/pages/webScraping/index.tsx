@@ -1,19 +1,25 @@
 import styles from './styles.module.scss'
 import { Header } from '../../components/Header'
 import { WebBox } from '../../components/WebBox'
-import { withStyles } from '@material-ui/core/styles';
-import { purple } from '@material-ui/core/colors';
 import Switch from '@material-ui/core/Switch';
 import { useEffect, useState } from 'react';
 import api from '../../services/api'
-
+import { useWebBox } from '../../context/webBoxContext'
+import Snackbar from '@material-ui/core/Snackbar';
+import { Message } from '../../components/Message'
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { CSVLink } from "react-csv";
 
 export default function WebScraping() {
 
   const [upDateMongoAtlas, setUpDateMongoAtlas] = useState(false)
   const [disableDownload, setDisableDownload] = useState(true)
   const [loading, setLoading] = useState(false)
+  const [disableProcess, setDisableProcess] = useState(true)
   const [dataToDownload, setDataToDownload] = useState([])
+  const [openError, setOpenError] = useState(false)
+  const [openSuccess, setOpenSuccess] = useState(false)
+  const { btnStatus_sector, btnStatus_instiglio, btnStatus_social, btnStatus_lab } = useWebBox()
 
   function handlerUpdate() {
     setUpDateMongoAtlas(!upDateMongoAtlas) //inverte o valor da variável
@@ -23,117 +29,155 @@ export default function WebScraping() {
     setLoading(!loading)
   }
 
-  function searchSocial() {
-    api.post('webScraping_social', { reconhecer: upDateMongoAtlas }).then(resp => {
-      const resposta = resp.data.slice(6, resp.data.length - 4)
+  async function searchAll() {
 
-      if (resposta != false && resposta != ["\r\n\r\n\r\n"] && resposta.length > 0) {
-        const resposta_formatada = resposta.replace("[", "").replace("]", "").replaceAll("'", "").split(",")
-        var new_data = dataToDownload
+    if (btnStatus_social == "selected") {
+      await api.post('webScraping_social', { reconhecer: upDateMongoAtlas }).then(resp => {
+        const resposta = resp.data.replace(/ /g,'')
+        if (resposta != false && resposta != ["\r\n\r\n\r\n"] && resposta.length > 0) {
 
-        for (var i = 0; i < resposta_formatada.length; i++) {
-          new_data.push({
-            'source': "Social Finance",
-            'link': resposta_formatada[i]
-          })
+          const resposta_formatada = resposta.replace("[", "").replace("]", "").replaceAll("'", "").split(",")
+          var new_data = dataToDownload
+
+          for (var i = 0; i < resposta_formatada.length; i++) {
+            new_data.push({
+              'source': "Social Finance",
+              'link': resposta_formatada[i].replace(/(\r\n|\n|\r)/gm, "")
+            })
+          }
+          setDataToDownload(new_data)
         }
-        setDataToDownload(new_data)
-      }
-      return resposta
-    }).catch((err) => {
-      return false
-    })
-  }
+        return resposta
+      }).catch((err) => {
+        return false
+      })
+    }
 
-  function searchInstiglio() {
-    api.post('webScraping_instiglio', { reconhecer: upDateMongoAtlas }).then(resp => {
-      const resposta = resp.data.slice(6, resp.data.length - 4)
+    if (btnStatus_instiglio == "selected") {
+      await api.post('webScraping_instiglio', { reconhecer: upDateMongoAtlas }).then(resp => {
+        const resposta = resp.data.replace(/ /g,'')
 
-      if (resposta != false && resposta != ["\r\n\r\n\r\n"] && resposta.length > 0) {
-        const resposta_formatada = resposta.replace("[", "").replace("]", "").replaceAll("'", "").split(",")
-        var new_data = dataToDownload
+        if (resposta != false && resposta != ["\r\n\r\n\r\n"] && resposta.length > 0) {
+          const resposta_formatada = resposta.replace("[", "").replace("]", "").replaceAll("'", "").split(",")
+          var new_data = dataToDownload
 
-        for (var i = 0; i < resposta_formatada.length; i++) {
-          new_data.push({
-            'source': "Instiglio",
-            'link': resposta_formatada[i]
-          })
+          for (var i = 0; i < resposta_formatada.length; i++) {
+            new_data.push({
+              'source': "Instiglio",
+              'link': resposta_formatada[i].replace(/(\r\n|\n|\r)/gm, "")
+            })
+          }
+
+          setDataToDownload(new_data)
         }
+        return resposta
+      }).catch((err) => {
+        return false
+      })
+    }
 
-        setDataToDownload(new_data)
-        console.log(dataToDownload)
-      }
-      return resposta
-    }).catch((err) => {
-      return false
-    })
-  }
+    if (btnStatus_sector == "selected") {
+      await api.post('webScraping_sector', { reconhecer: upDateMongoAtlas }).then(resp => {
+        const resposta = resp.data.replace(/ /g,'')
 
-  function searchSector() {
-    api.post('webScraping_sector', { reconhecer: upDateMongoAtlas }).then(resp => {
-      const resposta = resp.data.slice(6, resp.data.length - 4)
+        if (resposta != false && resposta != ["\r\n\r\n\r\n"] && resposta.length > 0) {
+          const resposta_formatada = resposta.replace("[", "").replace("]", "").replaceAll("'", "").split(",")
+          var new_data = dataToDownload
 
-      if (resposta != false && resposta != ["\r\n\r\n\r\n"] && resposta.length > 0) {
-        const resposta_formatada = resposta.replace("[", "").replace("]", "").replaceAll("'", "").split(",")
-        var new_data = dataToDownload
-
-        for (var i = 0; i < resposta_formatada.length; i++) {
-          new_data.push({
-            'source': "Third Sector",
-            'link': resposta_formatada[i]
-          })
+          for (var i = 0; i < resposta_formatada.length; i++) {
+            new_data.push({
+              'source': "Third Sector",
+              'link': resposta_formatada[i].replace(/(\r\n|\n|\r)/gm, "")
+            })
+          }
+          setDataToDownload(new_data)
         }
+        return resposta
+      }).catch((err) => {
+        return false
+      })
+    }
 
-        setDataToDownload(new_data)
-      }
-      return resposta
-    }).catch((err) => {
-      return false
-    })
-  }
+    if (btnStatus_lab == "selected") {
+      await api.post('webScraping_lab', { reconhecer: upDateMongoAtlas }).then(resp => {
+        const resposta = resp.data.replace(/ /g,'')
 
-  function serachLab() {
-    api.post('webScraping_lab', { reconhecer: upDateMongoAtlas }).then(resp => {
-      const resposta = resp.data.slice(6, resp.data.length - 4)
+        if (resposta != false && resposta != ["\r\n\r\n\r\n"] && resposta.length > 0) {
+          const resposta_formatada = resposta.replace("[", "").replace("]", "").replaceAll("'", "").split(",")
+          var new_data = dataToDownload
 
-      if (resposta != false && resposta != ["\r\n\r\n\r\n"] && resposta.length > 0) {
-        const resposta_formatada = resposta.replace("[", "").replace("]", "").replaceAll("'", "").split(",")
-        var new_data = dataToDownload
+          for (var i = 0; i < resposta_formatada.length; i++) {
+            new_data.push({
+              'source': "GoLab",
+              'link': resposta_formatada[i].replace(/(\r\n|\n|\r)/gm, "")
+            })
+          }
 
-        for (var i = 0; i < resposta_formatada.length; i++) {
-          new_data.push({
-            'source': "GoLab",
-            'link': resposta_formatada[i]
-          })
+          setDataToDownload(new_data)
         }
+        return resposta
+      }).catch((err) => {
+        return false
+      })
+    }
 
-        setDataToDownload(new_data)
-      }
-      return resposta
-    }).catch((err) => {
-      return false
-    })
+    if (dataToDownload.length == 0) {
+      setOpenError(true)
+    }
+
+    else {
+      setOpenSuccess(true)
+      setDisableDownload(false)
+    }
+    setLoading(false)
   }
 
-  function searchAll() {
-    searchInstiglio()
-    //searchSector()
-    //serachLab()
-    //searchSocial()
-  }
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenError(false);
+    setOpenSuccess(false)
+  };
+
+  const error = (
+    <Snackbar style={{ width: "20rem", height: "2.5rem" }} open={openError} autoHideDuration={2000} onClose={handleClose}>
+      <Message message={{ type: "error", message: "Sorry, nothing new today :(" }}></Message>
+    </Snackbar>
+  )
+
+  const success = (
+    <Snackbar style={{ width: "20rem", height: "2.5rem" }} open={openSuccess} autoHideDuration={2000} onClose={handleClose}>
+      <Message message={{ type: "success", message: "We got something!" }}></Message>
+    </Snackbar>
+  )
 
   useEffect(() => {
     if (loading) {
-      setTimeout(function () {
-        searchAll()
-        setLoading(false)
-      })
+      searchAll()
     }
   }, [loading])
+
+  useEffect(() => {
+    if (btnStatus_sector == 'selected' ||
+      btnStatus_instiglio == 'selected' ||
+      btnStatus_social == 'selected' ||
+      btnStatus_lab == 'selected') {
+      setDisableProcess(false)
+    }
+
+    else {
+      setDisableProcess(true)
+    }
+  }, [btnStatus_sector, btnStatus_instiglio, btnStatus_social, btnStatus_lab])
 
   return (
     <div className={styles.webPage}>
       <Header></Header>
+
+      {openError ? (error) : (null)}
+      {openSuccess ? (success) : (null)}
 
       <div className={styles.title}>
         <h1>Searching Through the Web</h1>
@@ -150,10 +194,32 @@ export default function WebScraping() {
         <p>Up Date Mongo Atlas</p>
 
         <div className={styles.search}>
+          {loading ? (<CircularProgress size="1.5rem" />) : (null)}
           <button
+            disabled={loading || disableProcess}
             onClick={() => handlerLoading()}
-            className={loading ? styles.disableButton : styles.searchButtonColor}>search</button>
-          <button className={disableDownload ? styles.disableButton : styles.downloadButton}>download</button>
+            className={loading || disableProcess ? styles.disableButton : styles.searchButtonColor}>search</button>
+
+          {disableDownload ?
+            (
+              <button
+                disabled={disableDownload}
+                className={styles.disableButton}>
+                Download
+              </button>
+            ) :
+            (
+              <button
+                disabled={disableDownload}
+                className={styles.downloadButton}>
+                <CSVLink
+                  className={styles.csvLink}
+                  filename={"web_scraping_news.csv"}
+                  data={dataToDownload}>
+                  Download
+                </CSVLink>
+              </button>
+            )}
         </div>
       </div>
 

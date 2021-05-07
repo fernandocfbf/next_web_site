@@ -1,6 +1,7 @@
 import styles from './styles.module.scss'
 import Image from 'next/image'
 import { useState } from 'react'
+import { useWebBox } from '../../context/webBoxContext'
 
 type Box = {
   title: string,
@@ -16,16 +17,28 @@ type BoxProps = {
 
 export function WebBox({ box }: BoxProps) {
 
-  const [btnStatus, setBtnStatus] = useState("unselected")
+  const {
+    btnStatus_instiglio,
+    btnStatus_social,
+    btnStatus_sector,
+    btnStatus_lab,
+    toggleBtn
+  } = useWebBox()
 
-  function handler_state(){
-    if(btnStatus == "unselected"){
-      setBtnStatus("selected")
-    }
+  if (box.title == 'Social Finance') {
+    var btnStatus = btnStatus_social
+  }
 
-    else{
-      setBtnStatus("unselected")
-    }
+  else if (box.title == 'Instiglio') {
+    btnStatus = btnStatus_instiglio
+  }
+
+  else if (box.title == 'Third Sector') {
+    btnStatus = btnStatus_sector
+  }
+
+  else if (box.title == 'Go Lab') {
+    btnStatus = btnStatus_lab
   }
 
   return (
@@ -44,8 +57,8 @@ export function WebBox({ box }: BoxProps) {
       <h1 className={styles.title}>{box.title}</h1>
       <p className={styles.text}>{box.text}</p>
       <button
-      className={btnStatus == "selected" ? styles.selected : styles.unselected}
-      onClick={()=>handler_state()}>
+        className={btnStatus == "selected" ? styles.selected : styles.unselected}
+        onClick={() => toggleBtn(btnStatus, box.title)}>
         {btnStatus}
       </button>
     </div>

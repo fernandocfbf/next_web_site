@@ -18,9 +18,9 @@ export function Header() {
   return (
     <div className={styles.headerContainer}>
       <Image
-        width={300}
-        height={200}
-        src={'/logo.PNG'}
+        width={400}
+        height={350}
+        src={'/logo_01.PNG'}
         objectFit='contain'
       ></Image>
 

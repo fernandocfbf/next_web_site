@@ -9,6 +9,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 import { Message } from '../../components/Message'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { CSVLink } from "react-csv";
+import Head from 'next/head'
+
 
 export default function WebScraping() {
 
@@ -33,8 +35,10 @@ export default function WebScraping() {
 
     if (btnStatus_social == "selected") {
       await api.post('webScraping_social', { reconhecer: upDateMongoAtlas }).then(resp => {
-        const resposta = resp.data.replace(/ /g,'')
-        if (resposta != false && resposta != ["\r\n\r\n\r\n"] && resposta.length > 0) {
+        const resposta = resp.data.replace(/ /g, '')
+        console.log("social: ", resposta)
+        if (resposta != false && resposta.length > 6) {
+          console.log("entrei >>>")
 
           const resposta_formatada = resposta.replace("[", "").replace("]", "").replaceAll("'", "").split(",")
           var new_data = dataToDownload
@@ -55,9 +59,12 @@ export default function WebScraping() {
 
     if (btnStatus_instiglio == "selected") {
       await api.post('webScraping_instiglio', { reconhecer: upDateMongoAtlas }).then(resp => {
-        const resposta = resp.data.replace(/ /g,'')
+        const resposta = resp.data.replace(/ /g, '')
+        console.log("Instiglio:", resposta)
 
-        if (resposta != false && resposta != ["\r\n\r\n\r\n"] && resposta.length > 0) {
+        if (resposta != false && resposta.length > 6) {
+          console.log("entrei >>>")
+
           const resposta_formatada = resposta.replace("[", "").replace("]", "").replaceAll("'", "").split(",")
           var new_data = dataToDownload
 
@@ -78,9 +85,10 @@ export default function WebScraping() {
 
     if (btnStatus_sector == "selected") {
       await api.post('webScraping_sector', { reconhecer: upDateMongoAtlas }).then(resp => {
-        const resposta = resp.data.replace(/ /g,'')
+        const resposta = resp.data.replace(/ /g, '')
         console.log("SECTOR: ", resposta)
-        if (resposta != false && resposta != ["\r\n\r\n\r\n"] && resposta.length > 0) {
+        if (resposta != false && resposta.length > 6) {
+          console.log("Entrei >>>")
           const resposta_formatada = resposta.replace("[", "").replace("]", "").replaceAll("'", "").split(",")
           var new_data = dataToDownload
 
@@ -100,9 +108,11 @@ export default function WebScraping() {
 
     if (btnStatus_lab == "selected") {
       await api.post('webScraping_lab', { reconhecer: upDateMongoAtlas }).then(resp => {
-        const resposta = resp.data.replace(/ /g,'')
+        const resposta = resp.data.replace(/ /g, '')
+        console.log("Instiglio:", resposta)
 
-        if (resposta != false && resposta != ["\r\n\r\n\r\n"] && resposta.length > 0) {
+        if (resposta != false && resposta.length > 6) {
+          console.log("entrei >>>")
           const resposta_formatada = resposta.replace("[", "").replace("]", "").replaceAll("'", "").split(",")
           var new_data = dataToDownload
 
@@ -174,6 +184,13 @@ export default function WebScraping() {
 
   return (
     <div className={styles.webPage}>
+
+      <Head>
+        <title>
+          Web Scraping | Automataion
+        </title>
+      </Head>
+
       <Header></Header>
 
       {openError ? (error) : (null)}

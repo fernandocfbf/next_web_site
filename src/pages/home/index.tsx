@@ -1,6 +1,7 @@
 import styles from './styles.module.scss'
 import { Header } from '../../components/Header'
-import Image from 'next/image'
+import Head from 'next/head'
+
 import {
 	AiOutlineLinkedin,
 	AiOutlineInstagram,
@@ -11,6 +12,13 @@ import {
 export default function Home() {
 	return (
 		<div className={styles.homePage}>
+
+			<Head>
+				<title>
+					Home | Automation
+        </title>
+			</Head>
+
 			<Header></Header>
 
 			<div className={styles.introduction}>

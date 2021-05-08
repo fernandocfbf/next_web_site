@@ -1,12 +1,10 @@
 import styles from './styles.module.scss'
 import { Header } from '../../components/Header'
-
 import { makeStyles } from '@material-ui/core/styles';
-
 import { AiOutlineDownload, AiOutlineRocket } from 'react-icons/ai'
 import { AiBox } from '../../components/IaBox'
 import { ProgressBar } from '../../components/ProgressBar'
-
+import Head from 'next/head'
 import { useEffect, useState } from 'react';
 import { DataGrid, GridColDef } from '@material-ui/data-grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -21,6 +19,7 @@ import { Message } from '../../components/Message'
 import functionresumeImport from "../../functions/resumeImport"
 import functionprocessDate from "../../functions/processDate"
 import functiontoDate from '../../functions/toDate'
+import functionClean from '../../functions/cleanDuplicates'
 
 import { useRef } from 'react';
 
@@ -166,9 +165,12 @@ export default function ArtificialIntelligence() {
 			inicio += 40
 			fim += 40
 		}
+
+		const clean = functionClean(new_data, 'manchete') //remove duplicate data
+
 		setLoading(false)
 		setProcessDisable(false)
-		setDataClassified(new_data)
+		setDataClassified(clean)
 		setDownloadDisable(false)
 		setProgress(100)
 	}
@@ -243,6 +245,12 @@ export default function ArtificialIntelligence() {
 		<div className={styles.artificalPage}>
 			<Header></Header>
 
+			<Head>
+				<title>
+					Artifical Intelligence | Automation
+        </title>
+			</Head>
+
 			{openError ? (error) : (null)}
 			{openSuccess ? (success) : (null)}
 
@@ -258,7 +266,7 @@ export default function ArtificialIntelligence() {
 						{
 							icon: "/precision.png",
 							title: "Algorithm precision",
-							value: "97,2%",
+							value: "90,2%",
 							type: 0
 						}
 					}></AiBox>

@@ -20,7 +20,7 @@ export function Header() {
       <Image
         width={300}
         height={200}
-        src={'/logo.png'}
+        src={'/logo.PNG'}
         objectFit='contain'
       ></Image>
 

@@ -79,7 +79,7 @@ export default function WebScraping() {
     if (btnStatus_sector == "selected") {
       await api.post('webScraping_sector', { reconhecer: upDateMongoAtlas }).then(resp => {
         const resposta = resp.data.replace(/ /g,'')
-
+        console.log("SECTOR: ", resposta)
         if (resposta != false && resposta != ["\r\n\r\n\r\n"] && resposta.length > 0) {
           const resposta_formatada = resposta.replace("[", "").replace("]", "").replaceAll("'", "").split(",")
           var new_data = dataToDownload

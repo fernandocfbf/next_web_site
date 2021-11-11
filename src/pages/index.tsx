@@ -8,7 +8,7 @@ export default function Login() {
 			<Head>
 				<title>
 					Login | Automation
-        </title>
+        	</title>
 			</Head>
 
 			<div className={styles.containerLoginBox}>

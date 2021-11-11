@@ -61,9 +61,6 @@ export function LoginBox() {
           Login
         </button>
       </div>
-
-
-
     </div>
   )
 }

@@ -1,0 +1,108 @@
+.webPage {
+  background: var(--background);
+  width: 100%;
+  height: 100vh;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2rem 0rem 0.5rem 0rem;
+
+  h1 {
+    margin: auto;
+    color: var(--white);
+  }
+
+  span {
+    margin: auto;
+    width: 7rem;
+    height: 0.1rem;
+    background: var(--green);
+    margin-top: 0.5rem;
+  }
+}
+
+.institutions{
+  display: flex;
+  padding: 1.5rem 2rem 2rem 2rem;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.settings{
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 2rem 2rem 0rem 2rem;
+
+  p{
+    color: var(--white);
+  }
+}
+
+.search{
+  display: flex;
+  position: absolute;
+  right: 2rem;
+  align-items: center;
+
+  button{
+    margin-left: 1rem;
+  }
+
+  .disableButton{
+    background-color: var(--selection);
+    color: var(--gray-500);
+    text-decoration: none;
+    width: 8rem;
+    height: 2.5rem;
+    font-weight: bold;
+    border-radius: 1rem;
+    border:none;
+  }
+
+  .downloadButton{
+    color: white;
+    text-decoration: none;
+    background: var(--green);
+    width: 8rem;
+    height: 2.5rem;
+    border-radius: 1rem;
+    border:none;
+    font-weight: bold;
+    transition: filter 0.2s;
+  
+    &:hover {
+      filter: brightness(0.9);
+    }
+  }
+
+  .searchButtonColor {
+    width: 8rem;
+    height: 2.5rem;
+    color: var(--green);
+    background: var(--selection);
+    border: none;
+    border-radius: 1rem;
+    border-style: solid;
+    border-color: var(--green);
+    border-width: 0.1rem;
+    font-weight: bold;
+  
+    transition: filter 0.2s;
+  
+    &:hover {
+      filter: brightness(0.9);
+    }
+  }
+}
+
+.csvLink{
+  text-decoration: none;
+  color: var(--white);
+}
+
+

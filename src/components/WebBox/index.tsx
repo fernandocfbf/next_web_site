@@ -22,6 +22,7 @@ export function WebBox({ box }: BoxProps) {
     btnStatus_social,
     btnStatus_sector,
     btnStatus_lab,
+    btnStatus_radarPPP,
     toggleBtn
   } = useWebBox()
 
@@ -39,6 +40,10 @@ export function WebBox({ box }: BoxProps) {
 
   else if (box.title == 'Go Lab') {
     btnStatus = btnStatus_lab
+  }
+
+  else if (box.title == 'Radar PPP') {
+    btnStatus = btnStatus_radarPPP
   }
 
   return (

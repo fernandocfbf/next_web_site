@@ -33,13 +33,33 @@
   }
 }
 
+
+
 .boxes {
   display: flex;
-  width: 40%;
+  width: 100%;
   height: 100%;
+  justify-content: center;
+  flex-direction: column;
   flex-wrap: wrap;
-  padding: 3rem 2rem 0rem 2rem;
+  padding: 3rem 2rem 40rem 2rem;
   gap: 2rem;
+
+  button {
+    color: var(--white);
+    background: var(--green);
+    border: none;
+    border-radius: 10rem;
+    font-weight: bold;
+    font-size: 1.25rem;
+    
+  
+    transition: filter 0.2s;
+  
+    &:hover {
+      filter: brightness(0.9);
+    }
+  }
 }
 
 .upload {
@@ -129,6 +149,25 @@
   font-weight: bold;
   border-radius: 1rem;
   border:none;
+}
+
+.filledHeader {
+  background: none;
+  height: 3rem;
+  border-style: solid;
+  padding: 0.675rem 2rem;
+  border-radius: 1rem;
+  border-color: var(--purple);
+  color: var(--white)
+}
+
+.headerButton {
+  color: var(--white);
+  background: none;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0.675rem 2rem;
 }
 
 

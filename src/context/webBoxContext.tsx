@@ -7,6 +7,7 @@ type WebBoxContextData = {
   btnStatus_social: string;
   btnStatus_sector: string;
   btnStatus_lab: string;
+  btnStatus_radarPPP: string;
   toggleBtn: (btnStatus: string, title: string) => void;
 }
 
@@ -21,6 +22,7 @@ export function WebBoxContextProvider({ children }: WebBoxContextProviderProps) 
   const [btnStatus_social, setBtnSocialStatus] = useState("unselected")
   const [btnStatus_sector, setBtnSectorStatus] = useState("unselected")
   const [btnStatus_lab, setBtnLabStatus] = useState("unselected")
+  const [btnStatus_radarPPP, setBtnRadarStatus] = useState("unselected")
 
 
 
@@ -44,6 +46,10 @@ export function WebBoxContextProvider({ children }: WebBoxContextProviderProps) 
     else if (title == 'Go Lab') {
       setBtnLabStatus(new_state)
     }
+
+    else if (title == 'Radar PPP') {
+      setBtnRadarStatus(new_state)
+    }
   }
 
   return (
@@ -52,6 +58,7 @@ export function WebBoxContextProvider({ children }: WebBoxContextProviderProps) 
       btnStatus_social,
       btnStatus_sector,
       btnStatus_lab,
+      btnStatus_radarPPP,
       toggleBtn
     }}>
       {children}
